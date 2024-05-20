@@ -1,3 +1,4 @@
+import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Modal from "./components/Modal";
 import Navbar from "./components/Navbar";
@@ -9,9 +10,11 @@ function App() {
   return (
     <div className="font-mono">
       <Navbar />
-      <Home />
-      <PetList />
-      <PetDetail />
+      <Routes>
+        <Route path="/" Component={Home} />
+        <Route path="/PetList" Component={PetList} />
+        <Route path="/PetDetail/:petDetailId" Component={PetDetail} />
+      </Routes>
     </div>
   );
 }
