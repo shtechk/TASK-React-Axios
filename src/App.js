@@ -12,8 +12,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" Component={Home} />
-        <Route path="/PetList" Component={PetList} />
-        <Route path="/PetDetail/:petDetailId" Component={PetDetail} />
+        <Route path="/pets" Component={PetList} />
+        <Route path="/pets/:petId" Component={PetDetail} />
       </Routes>
     </div>
   );

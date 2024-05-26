@@ -1,17 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import petsData from "../petsData";
 import { Navigate, useParams } from "react-router-dom";
+import { getOnePet } from "../api/pets";
+import { useQuery } from "@tanstack/react-query";
 
 const PetDetail = () => {
-  const { petDetailId } = useParams();
+  const { petId } = useParams();
 
-  const pet = petsData.find((pet) => {
-    return pet.id == petDetailId;
+  const { data: pet, isLoading } = useQuery({
+    queryKey: ["getOne", petId],
+    queryFn: () => getOnePet(petId),
   });
+  // the {data: pet} method is called code destructuring.
+  // when i destructure a code, i am asking for a specific key within the object.
 
-  if (!pet) {
-    return <Navigate to="/" />;
-  }
+  // -------------------------------------------------------
+  // the below code is if we want to fetch pets whose data we have in the frontend.
+  // however, if we want to want to fetch pets from the backened data, follow the code below:
+
+  // const pet = petsData.find((pet) => {
+  //   return pet.id == petId;
+  // });
+
+  // if (!pet) {
+  //   return <Navigate to="/" />;
+  // }
+
+  // -------------------------------------------------------
+  // this is another commented out code below, because it is the old "unclean" method, we now are using useQuery
+
+  // const [pet, setpet] = useState({});
+
+  // const handleGetPet = async () => {
+  //   const res = await getOnePet(petId);
+  //   setpet(res);
+  // };
+
+  // part of this code also uses the following command, placed below the first <div> after "return"
+
+  // <button onClick={handleGetPet}>Fetch Pet</button>
+  // -------------------------------------------------------
+
+  if (isLoading) return <h1>Your request is loading..</h1>;
+
+  // you can also just write the below simple code line instead of "isLoading".
+  // the idea is that "if the pet is available, return, (all of the below)"
+
+  // if (pet)
 
   return (
     <div className="bg-[#F9E3BE] w-screen h-[100vh] flex justify-center items-center">
